@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { LogOut, Package, Tag, ShoppingBag, Plus, Trash2, Upload, X, Star, Sparkles, Image as ImageIcon } from 'lucide-react';
+import { LogOut, Package, Tag, ShoppingBag, Plus, Trash2, Upload, X, Star, Sparkles, Image as ImageIcon, Pencil } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -25,6 +25,7 @@ function AdminPanel() {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showAddProduct, setShowAddProduct] = useState(false);
+  const [editProduct, setEditProduct] = useState(null);
   const [showAddCoupon, setShowAddCoupon] = useState(false);
 
   useEffect(() => {
@@ -190,7 +191,10 @@ function AdminPanel() {
                         <td className="p-3"><Switch checked={!!p.bestSeller} onCheckedChange={(v) => toggleField(p.id, 'bestSeller', v)} /></td>
                         <td className="p-3"><Switch checked={!!p.isNew} onCheckedChange={(v) => toggleField(p.id, 'isNew', v)} /></td>
                         <td className="p-3 text-right">
-                          <button onClick={() => deleteProduct(p.id)} className="text-maroon/40 hover:text-destructive"><Trash2 className="h-4 w-4" /></button>
+                          <div className="inline-flex gap-1">
+                            <button onClick={() => setEditProduct(p)} className="text-maroon/60 hover:text-saffron" title="Edit"><Pencil className="h-4 w-4" /></button>
+                            <button onClick={() => deleteProduct(p.id)} className="text-maroon/40 hover:text-destructive" title="Delete"><Trash2 className="h-4 w-4" /></button>
+                          </div>
                         </td>
                       </tr>
                     ))}
@@ -277,6 +281,7 @@ function AdminPanel() {
       </div>
 
       <AddProductDialog open={showAddProduct} onOpenChange={setShowAddProduct} token={token} onCreated={(p) => { setProducts((prev) => [p, ...prev]); }} />
+      <EditProductDialog product={editProduct} onOpenChange={(open) => { if (!open) setEditProduct(null); }} token={token} onUpdated={(updated) => { setProducts((prev) => prev.map((p) => p.id === updated.id ? { ...p, ...updated } : p)); }} />
       <AddCouponDialog open={showAddCoupon} onOpenChange={setShowAddCoupon} token={token} onCreated={(c) => { setCoupons((prev) => [c, ...prev]); }} />
     </div>
   );
@@ -382,6 +387,143 @@ function AddProductDialog({ open, onOpenChange, token, onCreated }) {
           </div>
 
           <DialogFooter><Button type="button" variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button><Button type="submit" disabled={submitting} className="bg-maroon text-cream">{submitting ? 'Creating...' : 'Create Product'}</Button></DialogFooter>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+function EditProductDialog({ product, onOpenChange, token, onUpdated }) {
+  const [form, setForm] = useState(null);
+  const [images, setImages] = useState([]);
+  const [uploading, setUploading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const fileRef = useRef(null);
+  const open = !!product;
+
+  useEffect(() => {
+    if (product) {
+      setForm({
+        name: product.name || '',
+        price: product.price || '',
+        mrp: product.mrp || '',
+        deity: product.deity || 'laddu-gopal',
+        category: product.category || 'dresses',
+        subcategory: product.subcategory || 'poshak',
+        collection: product.collection || '',
+        fabric: product.fabric || '',
+        color: product.color || '',
+        occasion: product.occasion || 'All',
+        sizes: (product.sizes || []).join(', '),
+        description: product.description || '',
+        materials: product.materials || '',
+        care: product.care || '',
+        bestSeller: !!product.bestSeller,
+        isNew: !!product.isNew,
+        inStock: product.inStock !== false,
+      });
+      setImages(product.images || []);
+    }
+  }, [product]);
+
+  const uploadFile = async (file) => {
+    setUploading(true);
+    try {
+      const fd = new FormData();
+      fd.append('file', file);
+      const res = await fetch('/api/admin/upload', { method: 'POST', headers: { Authorization: `Bearer ${token}` }, body: fd });
+      const data = await res.json();
+      if (data.success) { setImages((prev) => [...prev, data.url]); toast.success('Image uploaded'); }
+      else toast.error(data.error || 'Upload failed');
+    } catch { toast.error('Upload failed'); }
+    setUploading(false);
+  };
+
+  const submit = async (e) => {
+    e.preventDefault();
+    setSubmitting(true);
+    try {
+      const payload = {
+        ...form,
+        price: parseInt(form.price),
+        mrp: parseInt(form.mrp),
+        sizes: form.sizes.split(',').map(s => s.trim()).filter(Boolean),
+        images,
+      };
+      const res = await fetch(`/api/admin/products/${product.id}`, {
+        method: 'PATCH',
+        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json();
+      if (data.success) {
+        toast.success('Product updated!');
+        onUpdated({ id: product.id, ...payload });
+        onOpenChange(false);
+      } else toast.error(data.error || 'Update failed');
+    } catch { toast.error('Update failed'); }
+    setSubmitting(false);
+  };
+
+  if (!form) return null;
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader><DialogTitle className="font-serif text-2xl text-maroon">Edit Product</DialogTitle></DialogHeader>
+        <form onSubmit={submit} className="space-y-4">
+          <div>
+            <Label>Product Images</Label>
+            <div className="grid grid-cols-4 gap-2 mt-2">
+              {images.map((img, i) => (
+                <div key={i} className="relative aspect-square rounded-lg overflow-hidden border border-gold/30">
+                  <img src={img} alt="" className="w-full h-full object-cover" />
+                  <button type="button" onClick={() => setImages((prev) => prev.filter((_, idx) => idx !== i))} className="absolute top-1 right-1 bg-white/90 rounded-full p-0.5"><X className="h-3 w-3 text-destructive" /></button>
+                </div>
+              ))}
+              {images.length < 6 && (
+                <button type="button" onClick={() => fileRef.current?.click()} disabled={uploading} className="aspect-square rounded-lg border-2 border-dashed border-gold/40 flex flex-col items-center justify-center text-maroon/60 hover:border-maroon hover:text-maroon disabled:opacity-50">
+                  {uploading ? <span className="text-xs">Uploading...</span> : (<><Upload className="h-5 w-5" /><span className="text-[10px] mt-1">Upload</span></>)}
+                </button>
+              )}
+              <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) uploadFile(f); e.target.value = ''; }} />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <div className="col-span-2"><Label>Product Name*</Label><Input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} /></div>
+            <div><Label>Price (₹)*</Label><Input type="number" required value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })} /></div>
+            <div><Label>MRP (₹)</Label><Input type="number" value={form.mrp} onChange={(e) => setForm({ ...form, mrp: e.target.value })} /></div>
+            <div><Label>Deity</Label>
+              <Select value={form.deity} onValueChange={(v) => setForm({ ...form, deity: v })}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>{DEITIES.map(d => <SelectItem key={d.slug} value={d.slug}>{d.name}</SelectItem>)}</SelectContent>
+              </Select>
+            </div>
+            <div><Label>Category</Label>
+              <Select value={form.category} onValueChange={(v) => setForm({ ...form, category: v })}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>{CATEGORIES.map(c => <SelectItem key={c.slug} value={c.slug}>{c.name}</SelectItem>)}</SelectContent>
+              </Select>
+            </div>
+            <div><Label>Sub-category</Label><Input value={form.subcategory} onChange={(e) => setForm({ ...form, subcategory: e.target.value })} /></div>
+            <div><Label>Collection</Label><Input value={form.collection} onChange={(e) => setForm({ ...form, collection: e.target.value })} /></div>
+            <div><Label>Fabric</Label><Input value={form.fabric} onChange={(e) => setForm({ ...form, fabric: e.target.value })} /></div>
+            <div><Label>Color</Label><Input value={form.color} onChange={(e) => setForm({ ...form, color: e.target.value })} /></div>
+            <div><Label>Occasion</Label><Input value={form.occasion} onChange={(e) => setForm({ ...form, occasion: e.target.value })} /></div>
+            <div className="col-span-2"><Label>Sizes (comma-separated)</Label><Input value={form.sizes} onChange={(e) => setForm({ ...form, sizes: e.target.value })} /></div>
+            <div className="col-span-2"><Label>Description</Label><Textarea rows={3} value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} /></div>
+            <div><Label>Materials</Label><Input value={form.materials} onChange={(e) => setForm({ ...form, materials: e.target.value })} /></div>
+            <div><Label>Care</Label><Input value={form.care} onChange={(e) => setForm({ ...form, care: e.target.value })} /></div>
+            <div className="flex items-center gap-2"><Switch checked={form.bestSeller} onCheckedChange={(v) => setForm({ ...form, bestSeller: v })} /><Label>Bestseller</Label></div>
+            <div className="flex items-center gap-2"><Switch checked={form.isNew} onCheckedChange={(v) => setForm({ ...form, isNew: v })} /><Label>New In</Label></div>
+            <div className="flex items-center gap-2"><Switch checked={form.inStock} onCheckedChange={(v) => setForm({ ...form, inStock: v })} /><Label>In Stock</Label></div>
+          </div>
+
+          <DialogFooter>
+            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button>
+            <Button type="submit" disabled={submitting} className="bg-maroon text-cream">{submitting ? 'Saving...' : 'Save Changes'}</Button>
+          </DialogFooter>
         </form>
       </DialogContent>
     </Dialog>
