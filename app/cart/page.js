@@ -16,15 +16,25 @@ function App() {
   const [coupon, setCoupon] = useState('');
   const [couponApplied, setCouponApplied] = useState(0);
 
-  const applyCoupon = () => {
-    if (coupon.toUpperCase() === 'BLESSED10') {
-      setCouponApplied(Math.round(subtotal * 0.1));
-      toast.success('Coupon BLESSED10 applied — 10% off!');
-    } else if (coupon.toUpperCase() === 'DIWALI15') {
-      setCouponApplied(Math.round(subtotal * 0.15));
-      toast.success('Coupon DIWALI15 applied — 15% off!');
-    } else {
-      toast.error('Invalid coupon code');
+  const applyCoupon = async () => {
+    if (!coupon.trim()) return;
+    try {
+      const res = await fetch(`/api/coupons/${coupon.trim()}`);
+      const data = await res.json();
+      if (data.valid) {
+        const c = data.coupon;
+        if (c.minCartValue && subtotal < c.minCartValue) {
+          toast.error(`Minimum cart value for this coupon is ₹${c.minCartValue}`);
+          return;
+        }
+        const discount = c.discountPct > 0 ? Math.round(subtotal * c.discountPct / 100) : c.discountAmt;
+        setCouponApplied(discount);
+        toast.success(`Coupon ${c.code} applied!`, { description: c.description });
+      } else {
+        toast.error(data.error || 'Invalid coupon code');
+      }
+    } catch {
+      toast.error('Failed to validate coupon');
     }
   };
 

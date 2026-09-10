@@ -1,6 +1,6 @@
 'use client';
 
-import { use, useEffect, useState } from 'react';
+import { use, useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import Header from '@/components/site/Header';
 import Footer from '@/components/site/Footer';
@@ -8,9 +8,8 @@ import ProductCard from '@/components/site/ProductCard';
 import { DEITIES } from '@/lib/products-data';
 import { ArrowRight, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useRef } from 'react';
 
-function ProductCarousel({ products, title }) {
+function ProductCarousel({ products }) {
   const scrollRef = useRef(null);
   const scrollBy = (dir) => {
     if (!scrollRef.current) return;
@@ -41,13 +40,14 @@ function App({ params }) {
   const deity = DEITIES.find((d) => d.slug === slug);
   const [meta, setMeta] = useState({ subcategories: [], collections: [] });
   const [allProducts, setAllProducts] = useState([]);
-  const [activeSubcat, setActiveSubcat] = useState('poshak');
+  const [activeSubcat, setActiveSubcat] = useState('');
   const [bestSellers, setBestSellers] = useState([]);
   const [newIn, setNewIn] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!slug) return;
+    setLoading(true);
     Promise.all([
       fetch(`/api/deity-meta/${slug}`).then((r) => r.json()),
       fetch(`/api/products?deity=${slug}`).then((r) => r.json()),
@@ -77,15 +77,12 @@ function App({ params }) {
   }
 
   const hasSubcats = meta.subcategories?.length > 0;
-  const currentSubProducts = hasSubcats
-    ? allProducts.filter((p) => p.subcategory === activeSubcat)
-    : allProducts;
+  const currentSubProducts = hasSubcats ? allProducts.filter((p) => p.subcategory === activeSubcat) : allProducts;
 
   return (
     <div className="min-h-screen bg-cream">
       <Header />
 
-      {/* Hero */}
       <section className="relative overflow-hidden bg-maroon">
         <img src={deity.image} alt={deity.name} className="absolute inset-0 w-full h-full object-cover opacity-30" />
         <div className="container mx-auto px-4 py-16 md:py-20 relative text-center">
@@ -103,13 +100,12 @@ function App({ params }) {
         </div>
       </section>
 
-      {/* Sub-collection tiles (Bedding, Summer, Pastel, Designer, Luxe) */}
       {meta.collections?.length > 0 && (
         <section className="container mx-auto px-4 py-10">
           <div className="text-center mb-6">
             <h2 className="font-serif text-2xl md:text-3xl text-maroon">{deity.name} Collections</h2>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+          <div className={`grid grid-cols-2 gap-3 ${meta.collections.length <= 4 ? 'md:grid-cols-4' : 'md:grid-cols-5'}`}>
             {meta.collections.map((c) => (
               <Link key={c.slug} href={`/shop?deity=${slug}&collection=${c.slug}`} className="group">
                 <div className="relative aspect-[4/5] rounded-xl overflow-hidden bg-white shadow-md border border-gold/20 hover:shadow-xl transition">
@@ -117,9 +113,7 @@ function App({ params }) {
                   <div className="absolute inset-0 bg-gradient-to-t from-maroon/95 via-maroon/40 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-3 text-center">
                     <h3 className="font-serif text-cream text-base md:text-lg font-semibold leading-tight">{c.name}</h3>
-                    <p className="text-gold text-[10px] mt-1 inline-flex items-center gap-1 group-hover:gap-2 transition">
-                      Shop Now <ArrowRight className="h-3 w-3" />
-                    </p>
+                    <p className="text-gold text-[10px] mt-1 inline-flex items-center gap-1 group-hover:gap-2 transition">Shop Now <ArrowRight className="h-3 w-3" /></p>
                   </div>
                 </div>
               </Link>
@@ -128,18 +122,15 @@ function App({ params }) {
         </section>
       )}
 
-      {/* JANMASHTAMI SPECIAL section with sub-category pill tabs */}
       {hasSubcats && (
         <section className="container mx-auto px-4 py-10 border-t border-gold/20">
           <div className="flex items-end justify-between mb-4">
             <div>
-              <p className="text-saffron font-semibold uppercase tracking-widest text-[11px] mb-1">Janmashtami Special</p>
+              <p className="text-saffron font-semibold uppercase tracking-widest text-[11px] mb-1">Featured</p>
               <h2 className="font-serif text-3xl md:text-4xl text-maroon">Shop {deity.name}</h2>
             </div>
             <Link href={`/shop?deity=${slug}`} className="text-maroon hover:text-saffron text-sm inline-flex items-center gap-1">View All <ArrowRight className="h-4 w-4" /></Link>
           </div>
-
-          {/* Sub-category pill tabs */}
           <div className="flex flex-wrap gap-2 mb-6">
             {meta.subcategories.map((sc) => (
               <button key={sc.slug} onClick={() => setActiveSubcat(sc.slug)}
@@ -148,12 +139,9 @@ function App({ params }) {
               </button>
             ))}
           </div>
-
           {loading ? (
             <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <div key={i} className="aspect-square bg-white/50 rounded-lg animate-pulse" />
-              ))}
+              {Array.from({ length: 5 }).map((_, i) => (<div key={i} className="aspect-square bg-white/50 rounded-lg animate-pulse" />))}
             </div>
           ) : currentSubProducts.length === 0 ? (
             <div className="text-center py-16 bg-white rounded-xl border border-gold/20">
@@ -165,7 +153,6 @@ function App({ params }) {
         </section>
       )}
 
-      {/* NEW IN & BESTSELLERS */}
       {(bestSellers.length > 0 || newIn.length > 0) && (
         <section className="container mx-auto px-4 py-10 border-t border-gold/20">
           <div className="flex items-end justify-between mb-6">
@@ -178,22 +165,18 @@ function App({ params }) {
         </section>
       )}
 
-      {/* ALL PRODUCTS grid */}
       <section className="container mx-auto px-4 py-10 border-t border-gold/20">
         <div className="flex items-end justify-between mb-6">
           <h2 className="font-serif text-3xl md:text-4xl text-maroon">All {deity.name} Products</h2>
           <p className="text-maroon/70 text-sm">{allProducts.length} items</p>
         </div>
-
         {loading ? (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4">
-            {Array.from({ length: 10 }).map((_, i) => (
-              <div key={i} className="aspect-square bg-white/50 rounded-lg animate-pulse" />
-            ))}
+            {Array.from({ length: 10 }).map((_, i) => (<div key={i} className="aspect-square bg-white/50 rounded-lg animate-pulse" />))}
           </div>
         ) : allProducts.length === 0 ? (
           <div className="text-center py-20">
-            <p className="text-maroon text-lg font-serif">No products yet for {deity.name} — coming soon</p>
+            <p className="text-maroon text-lg font-serif">No products yet for {deity.name}</p>
             <Link href="/shop"><Button className="mt-4 bg-maroon text-cream">Browse other collections</Button></Link>
           </div>
         ) : (
@@ -203,16 +186,10 @@ function App({ params }) {
         )}
       </section>
 
-      {/* Why choose Vanya */}
       <section className="bg-white border-y border-gold/30 py-10 mt-8">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-            {[
-              { title: 'Handcrafted by Skilled Artisans', sub: 'Vrindavan • Moradabad' },
-              { title: 'Premium Quality Fabrics', sub: 'Pure silk & brocade' },
-              { title: 'Triple Quality Check', sub: 'Before shipping' },
-              { title: 'Secure Packaging', sub: 'Fast delivery' },
-            ].map((b, i) => (
+            {[{ title: 'Handcrafted by Skilled Artisans', sub: 'Vrindavan • Moradabad' }, { title: 'Premium Quality Fabrics', sub: 'Pure silk & brocade' }, { title: 'Triple Quality Check', sub: 'Before shipping' }, { title: 'Secure Packaging', sub: 'Fast delivery' }].map((b, i) => (
               <div key={i}>
                 <div className="font-serif text-base md:text-lg text-maroon">{b.title}</div>
                 <div className="text-xs text-maroon/60 mt-1">{b.sub}</div>
