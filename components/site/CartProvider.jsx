@@ -4,7 +4,7 @@ import { createContext, useContext, useEffect, useState, useCallback } from 'rea
 import { toast } from 'sonner';
 
 const CartContext = createContext(null);
-const STORAGE_KEY = 'vanya_cart_v1';
+const STORAGE_KEY = 'vaanya_cart_v1';
 
 export function CartProvider({ children }) {
   const [items, setItems] = useState([]);

@@ -29,7 +29,7 @@ function AdminPanel() {
   const [showAddCoupon, setShowAddCoupon] = useState(false);
 
   useEffect(() => {
-    const t = typeof window !== 'undefined' && localStorage.getItem('vanya_admin_token');
+    const t = typeof window !== 'undefined' && localStorage.getItem('vaanya_admin_token');
     if (!t) { router.push('/admin/login'); return; }
     setToken(t);
   }, [router]);
@@ -56,7 +56,7 @@ function AdminPanel() {
 
   useEffect(() => { if (token) loadData(); /* eslint-disable-next-line */ }, [token]);
 
-  const logout = () => { localStorage.removeItem('vanya_admin_token'); router.push('/admin/login'); };
+  const logout = () => { localStorage.removeItem('vaanya_admin_token'); router.push('/admin/login'); };
 
   const toggleField = async (id, field, value) => {
     const res = await fetch(`/api/admin/products/${id}`, {
@@ -108,7 +108,7 @@ function AdminPanel() {
               <span className="font-serif text-white text-lg font-bold">V</span>
             </div>
             <div>
-              <div className="font-serif text-xl font-bold text-gold">Vanya Admin</div>
+              <div className="font-serif text-xl font-bold text-gold">Vaanya Admin</div>
               <div className="text-[9px] uppercase tracking-widest text-cream/70 -mt-1">Dashboard</div>
             </div>
           </Link>

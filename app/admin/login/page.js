@@ -15,7 +15,7 @@ function App() {
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && localStorage.getItem('vanya_admin_token')) {
+    if (typeof window !== 'undefined' && localStorage.getItem('vaanya_admin_token')) {
       router.push('/admin');
     }
   }, [router]);
@@ -31,7 +31,7 @@ function App() {
       });
       const data = await res.json();
       if (data.success) {
-        localStorage.setItem('vanya_admin_token', data.token);
+        localStorage.setItem('vaanya_admin_token', data.token);
         toast.success('Welcome back, admin!');
         router.push('/admin');
       } else {
@@ -51,8 +51,8 @@ function App() {
             <span className="font-serif text-white text-2xl font-bold">V</span>
           </div>
           <div>
-            <div className="font-serif text-3xl font-bold text-maroon">Vanya</div>
-            <div className="text-[10px] uppercase tracking-[0.25em] text-saffron -mt-1">Handicrafts</div>
+            <div className="font-serif text-3xl font-bold text-maroon">Vaanya</div>
+            <div className="text-[10px] uppercase tracking-[0.25em] text-saffron -mt-1">Creation 5</div>
           </div>
         </Link>
         <div className="bg-white rounded-2xl p-8 border border-gold/30 shadow-xl">
@@ -72,7 +72,7 @@ function App() {
               {submitting ? 'Signing in...' : 'Sign In'}
             </Button>
             <p className="text-[11px] text-maroon/60 text-center pt-2 flex items-center justify-center gap-1">
-              <Sparkles className="h-3 w-3 text-saffron" /> Default password: <code className="bg-cream px-1.5 py-0.5 rounded text-maroon">vanya-admin-2025</code>
+              <Sparkles className="h-3 w-3 text-saffron" /> Default password: <code className="bg-cream px-1.5 py-0.5 rounded text-maroon">vaanya-admin-2025</code>
             </p>
           </form>
         </div>

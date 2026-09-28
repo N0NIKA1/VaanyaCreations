@@ -30,7 +30,7 @@ export default function Header() {
               </SheetTrigger>
               <SheetContent side="left" className="bg-cream w-80">
                 <SheetHeader>
-                  <SheetTitle className="text-maroon font-serif text-2xl">Vanya Handicrafts</SheetTitle>
+                  <SheetTitle className="text-maroon font-serif text-2xl">Vaanya Creation 5</SheetTitle>
                 </SheetHeader>
                 <div className="mt-6 space-y-6">
                   <div>
@@ -64,8 +64,8 @@ export default function Header() {
               <span className="font-serif text-white text-2xl font-bold">V</span>
             </div>
             <div className="leading-tight">
-              <div className="font-serif text-2xl font-bold text-maroon tracking-wide">Vanya</div>
-              <div className="text-[10px] uppercase tracking-[0.25em] text-saffron -mt-1">Handicrafts</div>
+              <div className="font-serif text-2xl font-bold text-maroon tracking-wide">Vaanya</div>
+              <div className="text-[10px] uppercase tracking-[0.25em] text-saffron -mt-1">Creation 5</div>
             </div>
           </Link>
 

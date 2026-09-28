@@ -5,7 +5,7 @@ import path from 'path';
 import crypto from 'crypto';
 import { PRODUCTS, DEITIES, CATEGORIES, DEITY_META } from '@/lib/products-data';
 
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'vanya-admin-2025';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'vaanya-admin-2025';
 const UPLOAD_DIR = path.join(process.cwd(), 'public', 'uploads');
 const MAX_UPLOAD_BYTES = 6 * 1024 * 1024; // 6 MB
 const ALLOWED_MIME = new Set(['image/jpeg', 'image/jpg', 'image/png', 'image/webp']);
@@ -21,7 +21,7 @@ function getClient() {
 
 async function getDb() {
   const client = await getClient();
-  const dbName = process.env.DB_NAME || 'vanya_handicrafts';
+  const dbName = process.env.DB_NAME || 'vaanya_creation_5';
   return client.db(dbName);
 }
 
@@ -67,7 +67,7 @@ export async function GET(request, { params }) {
   const url = new URL(request.url);
 
   try {
-    if (p.length === 0) return json({ message: 'Vanya Handicrafts API', version: '2.0' });
+    if (p.length === 0) return json({ message: 'Vaanya Creation 5 API', version: '2.0' });
     if (p[0] === 'deities') return json({ deities: DEITIES });
     if (p[0] === 'categories') return json({ categories: CATEGORIES });
 

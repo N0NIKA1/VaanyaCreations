@@ -31,8 +31,8 @@ export default function Footer() {
                 <span className="font-serif text-white text-2xl font-bold">V</span>
               </div>
               <div>
-                <div className="font-serif text-2xl font-bold text-gold">Vanya</div>
-                <div className="text-[10px] uppercase tracking-[0.25em] text-cream/80">Handicrafts</div>
+                <div className="font-serif text-2xl font-bold text-gold">Vaanya</div>
+                <div className="text-[10px] uppercase tracking-[0.25em] text-cream/80">Creation 5</div>
               </div>
             </div>
             <p className="text-sm text-cream/80 leading-relaxed">
@@ -72,7 +72,7 @@ export default function Footer() {
           <div>
             <h4 className="font-serif text-gold text-lg mb-4">Get in Touch</h4>
             <ul className="space-y-3 text-sm text-cream/80">
-              <li className="flex items-start gap-2"><Mail className="h-4 w-4 mt-0.5 text-gold" /> care@vanyahandicrafts.com</li>
+              <li className="flex items-start gap-2"><Mail className="h-4 w-4 mt-0.5 text-gold" /> care@vaanyacreation5.com</li>
               <li className="flex items-start gap-2"><Phone className="h-4 w-4 mt-0.5 text-gold" /> +91 98765 43210</li>
               <li className="flex items-start gap-2"><MapPin className="h-4 w-4 mt-0.5 text-gold" /> Vrindavan, Uttar Pradesh, India</li>
             </ul>
@@ -82,7 +82,7 @@ export default function Footer() {
 
       <div className="border-t border-[#C89B3C]/30">
         <div className="container mx-auto px-4 py-5 text-center text-xs text-cream/60">
-          © {new Date().getFullYear()} Vanya Handicrafts. All rights reserved. Made with devotion in Bharat 🛡️
+          © {new Date().getFullYear()} Vaanya Creation 5. All rights reserved. Made with devotion in Bharat 🛡️
         </div>
       </div>
     </footer>

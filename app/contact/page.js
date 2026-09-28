@@ -83,7 +83,7 @@ function App() {
                 </div>
                 <div>
                   <h3 className="font-serif text-lg text-maroon">Email</h3>
-                  <a href="mailto:care@vanyahandicrafts.com" className="text-maroon/80 hover:text-saffron">care@vanyahandicrafts.com</a>
+                  <a href="mailto:care@vaanyacreation5.com" className="text-maroon/80 hover:text-saffron">care@vaanyacreation5.com</a>
                   <p className="text-xs text-maroon/60 mt-1">For orders, custom requests, wholesale inquiries</p>
                 </div>
               </div>

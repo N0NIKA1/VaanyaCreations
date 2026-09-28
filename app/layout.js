@@ -3,7 +3,7 @@ import { Providers } from './providers'
 import { Toaster } from '@/components/ui/sonner'
 
 export const metadata = {
-  title: 'Vanya Handicrafts — Deity Dresses & Handmade Antiques',
+  title: 'Vaanya Creation 5 — Deity Dresses & Handmade Antiques',
   description: 'Handcrafted Poshak (Vastra) for Laddu Gopal, Radha Krishna, Mata Rani and more. Premium brass idols, puja items and antiques. Ships PAN India and internationally.',
   keywords: 'laddu gopal poshak, deity dress, radha krishna vastra, mata rani chunri, brass idol, puja items, handmade antiques, vanya handicrafts',
 }

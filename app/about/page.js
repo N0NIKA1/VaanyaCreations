@@ -20,7 +20,7 @@ function App() {
           <p className="text-gold font-semibold uppercase tracking-widest text-sm mb-3">Our Story</p>
           <h1 className="font-serif text-5xl md:text-7xl font-bold text-cream">Made in devotion,<br />shipped with love</h1>
           <p className="text-cream/90 text-lg mt-4 max-w-2xl mx-auto">
-            Vanya Handicrafts is a small studio of Indian artisans hand-crafting Poshak, Shringar, and heirloom brass pieces for devotees around the world.
+            Vaanya Creation 5 is a small studio of Indian artisans hand-crafting Poshak, Shringar, and heirloom brass pieces for devotees around the world.
           </p>
         </div>
       </section>
@@ -32,7 +32,7 @@ function App() {
             <p className="text-saffron font-semibold uppercase tracking-widest text-sm mb-2">Since our first stitch</p>
             <h2 className="font-serif text-4xl text-maroon leading-tight">A tradition passed hand to hand</h2>
             <div className="space-y-4 mt-5 text-maroon/85 leading-relaxed">
-              <p>Vanya Handicrafts began in a small workshop in Vrindavan, where three generations of a weaving family had been stitching poshak for Laddu Gopal in their own home mandirs. What began as seva for their Aradhya became a calling to help other devotees adorn their deities with the same love and care.</p>
+              <p>Vaanya Creation 5 began in a small workshop in Vrindavan, where three generations of a weaving family had been stitching poshak for Laddu Gopal in their own home mandirs. What began as seva for their Aradhya became a calling to help other devotees adorn their deities with the same love and care.</p>
               <p>Today we work with over 120 artisan families across Vrindavan, Moradabad, Jaipur and Kumbakonam — each specializing in a specific craft: silk poshak, brass casting, wood carving, or zari embroidery.</p>
               <p>Every piece that leaves our studio is inspected, blessed at the local mandir, and shipped to devotees in India and 25+ countries around the world.</p>
             </div>

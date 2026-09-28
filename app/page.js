@@ -30,7 +30,7 @@ function App() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
       });
-      toast.success('Welcome to the Vanya family!', { description: 'Enjoy 10% off your first order.' });
+      toast.success('Welcome to the Vaanya family!', { description: 'Enjoy 10% off your first order.' });
       setEmail('');
     } catch {
       toast.error('Something went wrong. Please try again.');
