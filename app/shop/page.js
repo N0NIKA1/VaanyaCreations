@@ -20,30 +20,34 @@ function ShopContent() {
   const initialCategory = searchParams.get('category') || '';
   const initialCollection = searchParams.get('collection') || '';
   const initialSubcategory = searchParams.get('subcategory') || '';
+  const initialSearch = searchParams.get('search') || '';
 
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [deity, setDeity] = useState(initialDeity);
   const [category, setCategory] = useState(initialCategory);
-  const [priceRange, setPriceRange] = useState([0, 5000]);
+  const [priceRange, setPriceRange] = useState([0, 12000]);
   const [sort, setSort] = useState('popular');
+  const [visible, setVisible] = useState(48);
 
   useEffect(() => {
     setLoading(true);
+    setVisible(48);
     const params = new URLSearchParams();
     if (deity) params.set('deity', deity);
     if (category) params.set('category', category);
     if (initialCollection) params.set('collection', initialCollection);
     if (initialSubcategory) params.set('subcategory', initialSubcategory);
+    if (initialSearch) params.set('search', initialSearch);
     params.set('sort', sort);
     params.set('priceMax', priceRange[1]);
     params.set('priceMin', priceRange[0]);
     fetch(`/api/products?${params}`)
       .then((r) => r.json())
       .then((d) => { setProducts(d.products || []); setLoading(false); });
-  }, [deity, category, priceRange, sort, initialCollection, initialSubcategory]);
+  }, [deity, category, priceRange, sort, initialCollection, initialSubcategory, initialSearch]);
 
-  const clearFilters = () => { setDeity(''); setCategory(''); setPriceRange([0, 5000]); };
+  const clearFilters = () => { setDeity(''); setCategory(''); setPriceRange([0, 12000]); };
 
   const FiltersPanel = () => (
     <div className="space-y-6">
@@ -81,7 +85,7 @@ function ShopContent() {
 
       <div>
         <h3 className="font-serif text-maroon text-lg mb-3">Price: ₹{priceRange[0]} — ₹{priceRange[1]}</h3>
-        <Slider value={priceRange} onValueChange={setPriceRange} min={0} max={5000} step={100} className="mt-2" />
+        <Slider value={priceRange} onValueChange={setPriceRange} min={0} max={12000} step={100} className="mt-2" />
       </div>
 
       <Button variant="outline" onClick={clearFilters} className="w-full border-maroon text-maroon hover:bg-maroon hover:text-cream">
@@ -151,9 +155,19 @@ function ShopContent() {
                 <Button onClick={clearFilters} className="mt-4 bg-maroon text-cream">Clear Filters</Button>
               </div>
             ) : (
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-                {products.map((p) => <ProductCard key={p.id} product={p} />)}
-              </div>
+              <>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+                  {products.slice(0, visible).map((p) => <ProductCard key={p.id} product={p} />)}
+                </div>
+                {products.length > visible && (
+                  <div className="text-center mt-8">
+                    <p className="text-plum text-xs mb-3">Showing {visible} of {products.length}</p>
+                    <Button onClick={() => setVisible((v) => v + 48)} variant="outline" className="border-gold/60 text-maroon hover:bg-white">
+                      Load more
+                    </Button>
+                  </div>
+                )}
+              </>
             )}
           </div>
         </div>

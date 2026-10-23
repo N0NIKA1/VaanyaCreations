@@ -14,7 +14,8 @@ function App() {
 
       {/* Hero */}
       <section className="relative overflow-hidden bg-maroon">
-        <img src={IMG.marigold} alt="Marigold" className="absolute inset-0 w-full h-full object-cover opacity-25" />
+        <img src={IMG.marigold} alt="Marigold" className="absolute inset-0 w-full h-full object-cover opacity-30" />
+        <div className="absolute inset-0 bg-maroon/75" />
         <div className="container mx-auto px-4 py-20 md:py-28 relative text-center">
           <Sparkles className="h-8 w-8 text-gold mx-auto mb-4" />
           <p className="text-gold font-semibold uppercase tracking-widest text-sm mb-3">Our Story</p>

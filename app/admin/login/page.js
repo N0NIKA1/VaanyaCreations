@@ -46,14 +46,8 @@ function App() {
   return (
     <div className="min-h-screen bg-cream flex items-center justify-center px-4">
       <div className="w-full max-w-md">
-        <Link href="/" className="flex items-center justify-center gap-2 mb-6">
-          <div className="w-12 h-12 rounded-full gold-gradient flex items-center justify-center">
-            <span className="font-serif text-white text-2xl font-bold">V</span>
-          </div>
-          <div>
-            <div className="font-serif text-3xl font-bold text-maroon">Vaanya</div>
-            <div className="text-[10px] uppercase tracking-[0.25em] text-saffron -mt-1">Creation 5</div>
-          </div>
+        <Link href="/" className="flex items-center justify-center mb-6">
+          <img src="/brand/logo-full.png" alt="Vaanya Creations 5" className="h-28 w-auto" />
         </Link>
         <div className="bg-white rounded-2xl p-8 border border-gold/30 shadow-xl">
           <div className="text-center mb-6">

@@ -3,7 +3,8 @@ import { MongoClient } from 'mongodb';
 import { writeFile, mkdir } from 'fs/promises';
 import path from 'path';
 import crypto from 'crypto';
-import { PRODUCTS, DEITIES, CATEGORIES, DEITY_META } from '@/lib/products-data';
+import { PRODUCTS, CATALOG_SIGNATURE } from '@/lib/seed-products';
+import { DEITIES, CATEGORIES, DEITY_META, COLLECTIONS, NAV } from '@/lib/nav-data';
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'vaanya-admin-2025';
 const UPLOAD_DIR = path.join(process.cwd(), 'public', 'uploads');
@@ -29,7 +30,7 @@ async function ensureSeed() {
   const db = await getDb();
   const count = await db.collection('products').countDocuments();
   const seedFlag = await db.collection('_meta').findOne({ _id: 'seed_version' });
-  const currentVersion = 'v4-' + PRODUCTS.length;
+  const currentVersion = 'v6-devastram-' + CATALOG_SIGNATURE;
   // Re-seed whenever version changes, but preserve admin-created products
   if (count === 0 || seedFlag?.value !== currentVersion) {
     await db.collection('products').deleteMany({ adminCreated: { $ne: true } });
@@ -71,6 +72,22 @@ export async function GET(request, { params }) {
     if (p[0] === 'deities') return json({ deities: DEITIES });
     if (p[0] === 'categories') return json({ categories: CATEGORIES });
 
+    if (p[0] === 'nav') return json({ nav: NAV });
+
+    if (p[0] === 'collections' && p.length === 1) {
+      return json({ collections: Object.values(COLLECTIONS) });
+    }
+
+    if (p[0] === 'collections' && p.length === 2) {
+      const db = await ensureSeed();
+      const meta = COLLECTIONS[p[1]];
+      if (!meta) return json({ error: 'Collection not found' }, 404);
+      const sort = url.searchParams.get('sort') || 'popular';
+      const sortMap = { popular: { reviews: -1 }, newest: { isNew: -1 }, 'price-asc': { price: 1 }, 'price-desc': { price: -1 } };
+      const items = await db.collection('products').find({ collections: p[1] }).sort(sortMap[sort] || sortMap.popular).toArray();
+      return json({ collection: meta, products: items.map(({ _id, ...x }) => x), total: items.length });
+    }
+
     if (p[0] === 'deity-meta' && p.length === 2) {
       const meta = DEITY_META[p[1]] || { subcategories: [], collections: [] };
       return json(meta);
@@ -79,8 +96,10 @@ export async function GET(request, { params }) {
     if (p[0] === 'products' && p.length === 1) {
       const db = await ensureSeed();
       const q = {};
-      const filters = ['deity', 'category', 'subcategory', 'collection'];
+      const filters = ['deity', 'category', 'subcategory', 'productType'];
       filters.forEach((f) => { const v = url.searchParams.get(f); if (v) q[f] = v; });
+      const collection = url.searchParams.get('collection');
+      if (collection) q.collections = collection;
       if (url.searchParams.get('bestSeller') === 'true') q.bestSeller = true;
       if (url.searchParams.get('isNew') === 'true') q.isNew = true;
       const priceMin = url.searchParams.get('priceMin');
@@ -91,7 +110,11 @@ export async function GET(request, { params }) {
         if (priceMax) q.price.$lte = parseInt(priceMax);
       }
       const search = url.searchParams.get('search');
-      if (search) q.name = { $regex: search, $options: 'i' };
+      if (search) q.$or = [
+        { name: { $regex: search, $options: 'i' } },
+        { productType: { $regex: search, $options: 'i' } },
+        { tags: { $regex: search, $options: 'i' } },
+      ];
       const sort = url.searchParams.get('sort') || 'popular';
       const sortMap = { popular: { reviews: -1 }, newest: { isNew: -1 }, 'price-asc': { price: 1 }, 'price-desc': { price: -1 } };
       const limit = parseInt(url.searchParams.get('limit') || '0');
@@ -113,6 +136,14 @@ export async function GET(request, { params }) {
     }
 
     // Coupons (public — used by cart)
+    if (p[0] === 'orders' && p.length === 2) {
+      const db = await getDb();
+      const order = await db.collection('orders').findOne({ id: p[1].trim().toUpperCase() });
+      if (!order) return json({ error: 'Order not found' }, 404);
+      const { _id, ...rest } = order;
+      return json({ order: rest });
+    }
+
     if (p[0] === 'coupons' && p.length === 1) {
       const db = await getDb();
       const list = await db.collection('coupons').find({ active: true }).toArray();

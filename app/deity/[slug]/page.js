@@ -84,7 +84,8 @@ function App({ params }) {
       <Header />
 
       <section className="relative overflow-hidden bg-maroon">
-        <img src={deity.image} alt={deity.name} className="absolute inset-0 w-full h-full object-cover opacity-30" />
+        <img src={deity.image} alt={deity.name} className="absolute inset-0 w-full h-full object-cover opacity-35" />
+        <div className="absolute inset-0 bg-maroon/70" />
         <div className="container mx-auto px-4 py-16 md:py-20 relative text-center">
           <Sparkles className="h-6 w-6 text-gold mx-auto mb-3" />
           <p className="text-gold font-semibold uppercase tracking-widest text-xs mb-2">Divine Collection</p>
@@ -107,7 +108,7 @@ function App({ params }) {
           </div>
           <div className={`grid grid-cols-2 gap-3 ${meta.collections.length <= 4 ? 'md:grid-cols-4' : 'md:grid-cols-5'}`}>
             {meta.collections.map((c) => (
-              <Link key={c.slug} href={`/shop?deity=${slug}&collection=${c.slug}`} className="group">
+              <Link key={c.slug} href={`/collection/${c.slug}`} className="group">
                 <div className="relative aspect-[4/5] rounded-xl overflow-hidden bg-white shadow-md border border-gold/20 hover:shadow-xl transition">
                   <img src={c.image} alt={c.name} className="w-full h-full object-cover img-zoom" />
                   <div className="absolute inset-0 bg-gradient-to-t from-maroon/95 via-maroon/40 to-transparent" />

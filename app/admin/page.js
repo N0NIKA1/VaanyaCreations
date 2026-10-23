@@ -20,6 +20,8 @@ function AdminPanel() {
   const router = useRouter();
   const [token, setToken] = useState(null);
   const [products, setProducts] = useState([]);
+  const [productQuery, setProductQuery] = useState('');
+  const [showAll, setShowAll] = useState(false);
   const [coupons, setCoupons] = useState([]);
   const [orders, setOrders] = useState([]);
   const [messages, setMessages] = useState([]);
@@ -96,6 +98,13 @@ function AdminPanel() {
     }
   };
 
+  const q = productQuery.trim().toLowerCase();
+  const filteredProducts = q
+    ? products.filter((p) => [p.name, p.id, p.deity, p.category, p.productType, ...(p.collections || [])]
+        .filter(Boolean).join(' ').toLowerCase().includes(q))
+    : products;
+  const visibleProducts = showAll ? filteredProducts : filteredProducts.slice(0, 60);
+
   if (!token) return null;
 
   return (
@@ -103,10 +112,10 @@ function AdminPanel() {
       {/* Admin header */}
       <header className="bg-maroon text-cream sticky top-0 z-40">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-9 h-9 rounded-full gold-gradient flex items-center justify-center">
-              <span className="font-serif text-white text-lg font-bold">V</span>
-            </div>
+          <Link href="/" className="flex items-center gap-2.5">
+            <span className="bg-cream rounded-full p-1 flex items-center justify-center">
+              <img src="/brand/logo-mark.png" alt="Vaanya Creations 5" className="h-8 w-8" />
+            </span>
             <div>
               <div className="font-serif text-xl font-bold text-gold">Vaanya Admin</div>
               <div className="text-[9px] uppercase tracking-widest text-cream/70 -mt-1">Dashboard</div>
@@ -114,7 +123,7 @@ function AdminPanel() {
           </Link>
           <div className="flex items-center gap-3">
             <Link href="/" className="text-cream/80 hover:text-gold text-sm hidden sm:inline">View store →</Link>
-            <Button size="sm" variant="outline" onClick={logout} className="border-gold/40 text-cream hover:bg-gold hover:text-maroon">
+            <Button size="sm" variant="outline" onClick={logout} className="bg-transparent border-cream/50 text-cream hover:bg-cream hover:text-maroon">
               <LogOut className="h-4 w-4 mr-1" /> Logout
             </Button>
           </div>
@@ -131,9 +140,9 @@ function AdminPanel() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
           {[
             { label: 'Products', value: products.length, icon: Package, color: 'bg-saffron/15 text-saffron' },
-            { label: 'Active Coupons', value: coupons.filter(c => c.active).length, icon: Tag, color: 'bg-gold/15 text-gold' },
+            { label: 'Active Coupons', value: coupons.filter(c => c.active).length, icon: Tag, color: 'bg-blush/60 text-rosedeep' },
             { label: 'Total Orders', value: orders.length, icon: ShoppingBag, color: 'bg-maroon/10 text-maroon' },
-            { label: 'Messages', value: messages.length, icon: Sparkles, color: 'bg-green-500/15 text-green-700' },
+            { label: 'Messages', value: messages.length, icon: Sparkles, color: 'bg-plum/15 text-plum' },
           ].map((s) => (
             <div key={s.label} className="bg-white rounded-xl border border-gold/30 p-4">
               <div className={`w-10 h-10 rounded-full ${s.color} flex items-center justify-center mb-2`}>
@@ -146,7 +155,7 @@ function AdminPanel() {
         </div>
 
         <Tabs defaultValue="products" className="space-y-6">
-          <TabsList className="bg-white border border-gold/30">
+          <TabsList className="bg-white border border-gold/30 max-w-full overflow-x-auto justify-start">
             <TabsTrigger value="products">Products ({products.length})</TabsTrigger>
             <TabsTrigger value="coupons">Coupons ({coupons.length})</TabsTrigger>
             <TabsTrigger value="orders">Orders ({orders.length})</TabsTrigger>
@@ -155,14 +164,24 @@ function AdminPanel() {
 
           {/* PRODUCTS TAB */}
           <TabsContent value="products">
-            <div className="flex justify-end mb-4">
-              <Button onClick={() => setShowAddProduct(true)} className="bg-maroon hover:bg-maroon/90 text-cream">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-4">
+              <Input
+                value={productQuery}
+                onChange={(e) => { setProductQuery(e.target.value); setShowAll(false); }}
+                placeholder="Search by name, ID, deity, collection…"
+                className="bg-white border-gold/50 text-maroon placeholder:text-plum/60 sm:max-w-sm"
+              />
+              <p className="text-xs text-plum sm:mr-auto">
+                Showing {visibleProducts.length} of {filteredProducts.length}
+                {filteredProducts.length !== products.length ? ` (${products.length} total)` : ''}
+              </p>
+              <Button onClick={() => setShowAddProduct(true)} className="bg-maroon hover:bg-maroon/90 text-cream shrink-0">
                 <Plus className="h-4 w-4 mr-1" /> Add Product
               </Button>
             </div>
-            <div className="bg-white rounded-xl border border-gold/30 overflow-hidden">
+            <div className="bg-white rounded-xl border border-gold/30 overflow-x-auto">
               <div className="overflow-x-auto">
-                <table className="w-full text-sm">
+                <table className="w-full min-w-[640px] text-sm">
                   <thead className="bg-cream border-b border-gold/30">
                     <tr className="text-left text-maroon">
                       <th className="p-3">Image</th>
@@ -177,9 +196,9 @@ function AdminPanel() {
                   <tbody>
                     {loading ? (
                       <tr><td colSpan={7} className="p-8 text-center text-maroon/60">Loading...</td></tr>
-                    ) : products.length === 0 ? (
-                      <tr><td colSpan={7} className="p-8 text-center text-maroon/60">No products yet</td></tr>
-                    ) : products.map((p) => (
+                    ) : visibleProducts.length === 0 ? (
+                      <tr><td colSpan={7} className="p-8 text-center text-maroon/60">No products match “{productQuery}”</td></tr>
+                    ) : visibleProducts.map((p) => (
                       <tr key={p.id} className="border-b border-gold/10 hover:bg-cream/40">
                         <td className="p-3"><img src={p.images?.[0]} alt={p.name} className="w-12 h-12 object-cover rounded" /></td>
                         <td className="p-3 text-maroon">
@@ -201,6 +220,13 @@ function AdminPanel() {
                   </tbody>
                 </table>
               </div>
+              {!showAll && filteredProducts.length > visibleProducts.length && (
+                <div className="p-4 text-center border-t border-gold/30">
+                  <Button variant="outline" onClick={() => setShowAll(true)} className="border-gold/50 text-maroon hover:bg-cream">
+                    Show all {filteredProducts.length} products
+                  </Button>
+                </div>
+              )}
             </div>
           </TabsContent>
 
@@ -211,8 +237,8 @@ function AdminPanel() {
                 <Plus className="h-4 w-4 mr-1" /> Add Coupon
               </Button>
             </div>
-            <div className="bg-white rounded-xl border border-gold/30 overflow-hidden">
-              <table className="w-full text-sm">
+            <div className="bg-white rounded-xl border border-gold/30 overflow-x-auto">
+              <table className="w-full min-w-[640px] text-sm">
                 <thead className="bg-cream border-b border-gold/30">
                   <tr className="text-left text-maroon">
                     <th className="p-3">Code</th>
@@ -243,8 +269,8 @@ function AdminPanel() {
 
           {/* ORDERS TAB */}
           <TabsContent value="orders">
-            <div className="bg-white rounded-xl border border-gold/30 overflow-hidden">
-              <table className="w-full text-sm">
+            <div className="bg-white rounded-xl border border-gold/30 overflow-x-auto">
+              <table className="w-full min-w-[640px] text-sm">
                 <thead className="bg-cream border-b border-gold/30">
                   <tr className="text-left text-maroon"><th className="p-3">Order ID</th><th className="p-3">Items</th><th className="p-3">Total</th><th className="p-3">Status</th><th className="p-3">Date</th></tr>
                 </thead>

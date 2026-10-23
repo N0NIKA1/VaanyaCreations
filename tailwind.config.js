@@ -20,6 +20,20 @@ module.exports = {
       },
       extend: {
         colors: {
+          /* ===== Vaanya Creations 5 brand palette (single source) ===== */
+          wine: { DEFAULT: '#7A0C2E', dark: '#5D0721', soft: '#9B1B43' },
+          rosedeep: '#B0355C',
+          rosesoft: '#E8A9B8',
+          blush: '#F3C8C0',
+          plum: { DEFAULT: '#6E4A63', soft: '#E4D3D9' },
+          ivory: { DEFAULT: '#F7F8EC', warm: '#FBFBF3' },
+          goldtrim: '#C9A227',
+          /* legacy aliases remapped onto the new palette */
+          maroon: { DEFAULT: '#7A0C2E', dark: '#5D0721', soft: '#9B1B43' },
+          saffron: '#B0355C',
+          gold: '#E8A9B8',
+          cream: '#F7F8EC',
+
           border: 'hsl(var(--border))',
           input: 'hsl(var(--input))',
           ring: 'hsl(var(--ring))',

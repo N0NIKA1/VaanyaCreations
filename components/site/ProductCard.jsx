@@ -20,7 +20,7 @@ export default function ProductCard({ product, variant = 'default' }) {
   if (variant === 'clean') {
     return (
       <Link href={`/product/${product.id}`} className="group block">
-        <div className="relative aspect-square overflow-hidden rounded-lg bg-white border border-[#C89B3C]/15 hover:border-saffron/40 transition">
+        <div className="relative aspect-square overflow-hidden rounded-lg bg-white border border-[#E8A9B8]/15 hover:border-saffron/40 transition">
           <img
             src={product.images?.[0]}
             alt={product.name}
@@ -31,7 +31,7 @@ export default function ProductCard({ product, variant = 'default' }) {
             <span className="absolute top-2 left-2 bg-saffron text-white text-[9px] font-semibold px-2 py-0.5 rounded uppercase tracking-wider">New In</span>
           )}
           {product.bestSeller && !product.isNew && (
-            <span className="absolute top-2 left-2 bg-maroon text-cream text-[9px] font-semibold px-2 py-0.5 rounded uppercase tracking-wider">Bestseller</span>
+            <span className="absolute top-2 left-2 bg-maroon text-cream text-[9px] font-semibold px-2 py-0.5 rounded uppercase tracking-wider border border-goldtrim/50">Bestseller</span>
           )}
         </div>
         <div className="pt-2.5 pb-1">
@@ -50,13 +50,13 @@ export default function ProductCard({ product, variant = 'default' }) {
   // Default rich card (existing)
   return (
     <Link href={`/product/${product.id}`} className="group block">
-      <div className="relative overflow-hidden rounded-xl bg-white border border-[#C89B3C]/20 shadow-sm hover:shadow-xl transition-all duration-300">
-        <div className="relative aspect-[4/5] overflow-hidden bg-[#FDF6E3]">
+      <div className="relative overflow-hidden rounded-xl bg-white border border-[#E8A9B8]/20 shadow-sm hover:shadow-xl transition-all duration-300">
+        <div className="relative aspect-[4/5] overflow-hidden bg-[#F7F8EC]">
           <img src={product.images?.[0]} alt={product.name} className="w-full h-full object-cover img-zoom" loading="lazy" />
           <div className="absolute top-3 left-3 flex flex-col gap-2">
-            {product.bestSeller && <Badge className="bg-maroon text-cream hover:bg-maroon text-[10px] tracking-wider">BESTSELLER</Badge>}
+            {product.bestSeller && <Badge className="bg-maroon text-cream hover:bg-maroon text-[10px] tracking-wider border border-goldtrim/50">BESTSELLER</Badge>}
             {product.isNew && <Badge className="bg-saffron text-white hover:bg-saffron text-[10px] tracking-wider">NEW</Badge>}
-            {discount > 0 && <Badge className="bg-gold text-maroon hover:bg-gold text-[10px] font-bold">-{discount}%</Badge>}
+            {discount > 0 && <Badge className="bg-rosedeep text-white hover:bg-rosedeep text-[10px] font-bold">-{discount}%</Badge>}
           </div>
           <button className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 flex items-center justify-center text-maroon hover:text-saffron shadow-md opacity-0 group-hover:opacity-100 transition">
             <Heart className="h-4 w-4" />

@@ -125,7 +125,7 @@ function App({ params }) {
               {p.mrp && p.mrp > p.price && (
                 <>
                   <span className="text-lg text-maroon/50 line-through">₹{p.mrp.toLocaleString('en-IN')}</span>
-                  <Badge className="bg-gold text-maroon">{discount}% OFF</Badge>
+                  <Badge className="bg-rosedeep text-white hover:bg-rosedeep">{discount}% OFF</Badge>
                 </>
               )}
             </div>

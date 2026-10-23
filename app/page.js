@@ -8,7 +8,9 @@ import Footer from '@/components/site/Footer';
 import ProductCard from '@/components/site/ProductCard';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { DEITIES, CATEGORIES, TESTIMONIALS, IMG } from '@/lib/products-data';
+import { DEITIES, CATEGORIES, TESTIMONIALS, IMG, COLLECTIONS } from '@/lib/products-data';
+
+const img = (handle, i = 0) => COLLECTIONS[handle]?.previews?.[i] || COLLECTIONS[handle]?.image || '';
 import { toast } from 'sonner';
 
 function App() {
@@ -90,7 +92,7 @@ function App() {
             <div className="relative">
               <div className="absolute -inset-4 gold-gradient opacity-20 blur-2xl rounded-full" />
               <div className="relative aspect-[4/5] rounded-2xl overflow-hidden border-4 border-gold/40 shadow-2xl">
-                <img src={IMG.hero} alt="Divine deity handcrafted" className="w-full h-full object-cover" />
+                <img src={img('laddu-gopal-designer')} alt="Handcrafted Laddu Gopal poshak" className="w-full h-full object-cover" />
               </div>
               <div className="absolute -bottom-4 -left-4 bg-white rounded-xl p-4 shadow-xl border border-gold/30 max-w-[200px] hidden sm:block">
                 <div className="flex items-center gap-2">
@@ -170,7 +172,8 @@ function App() {
       {/* Festival banner */}
       <section className="container mx-auto px-4 py-12">
         <div className="relative rounded-3xl overflow-hidden bg-maroon">
-          <img src={IMG.diwaliDiyas} alt="Janmashtami festive collection" className="absolute inset-0 w-full h-full object-cover opacity-40" />
+          <img src={IMG.diwaliDiyas} alt="Janmashtami festive collection" className="absolute inset-0 w-full h-full object-cover opacity-45" />
+          <div className="absolute inset-0 bg-maroon/65" />
           <div className="relative p-8 md:p-14 text-center text-cream">
             <p className="text-gold font-semibold uppercase tracking-widest text-sm mb-3">Festive Collection</p>
             <h3 className="font-serif text-4xl md:text-6xl font-bold mb-3">Janmashtami Special</h3>
@@ -191,22 +194,40 @@ function App() {
           <h2 className="font-serif text-4xl md:text-5xl text-maroon">Shop by Category</h2>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          {[
-            { slug: 'dresses', name: 'Deity Dresses', img: IMG.radhaKrishnaPoshak },
-            { slug: 'antiques', name: 'Handmade Antiques', img: IMG.elephants },
-            { slug: 'puja-items', name: 'Puja Items', img: IMG.pujaItems },
-            { slug: 'jewellery', name: 'Jewellery & Shringar', img: IMG.durgaMarigold },
-            { slug: 'home-decor', name: 'Home Decor', img: IMG.dancers },
-            { slug: 'gifting', name: 'Gifting', img: IMG.brassCollection },
-          ].map((c) => (
+          {CATEGORIES.map((c) => (
             <Link key={c.slug} href={`/shop?category=${c.slug}`} className="group relative aspect-[16/10] rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition">
-              <img src={c.img} alt={c.name} className="absolute inset-0 w-full h-full object-cover img-zoom" />
+              <img src={c.image} alt={c.name} className="absolute inset-0 w-full h-full object-cover img-zoom" />
               <div className="absolute inset-0 bg-gradient-to-t from-maroon/90 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-6">
                 <h3 className="font-serif text-cream text-2xl md:text-3xl font-bold">{c.name}</h3>
                 <p className="text-cream/80 text-sm mt-1 inline-flex items-center gap-1 group-hover:gap-2 transition">
-                  Shop now <ArrowRight className="h-4 w-4" />
+                  {c.count} pieces <ArrowRight className="h-4 w-4" />
                 </p>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* Curated collections */}
+      <section className="container mx-auto px-4 pb-4">
+        <div className="text-center max-w-2xl mx-auto mb-8">
+          <p className="text-saffron font-semibold uppercase tracking-widest text-sm mb-2">Handpicked</p>
+          <h2 className="font-serif text-4xl md:text-5xl text-maroon">Curated Collections</h2>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+          {[
+            'newin-bestsellers', 'luxe-laddu', 'under-299',
+            'lehenga-patka', 'glam-potlies', 'clearance-sale',
+          ].filter((h) => COLLECTIONS[h]).map((h) => (
+            <Link key={h} href={`/collection/${h}`} className="group">
+              <div className="relative aspect-[4/5] rounded-xl overflow-hidden bg-white shadow-sm border border-gold/30 hover:shadow-xl transition">
+                <img src={COLLECTIONS[h].image} alt={COLLECTIONS[h].title} className="w-full h-full object-cover img-zoom" />
+                <div className="absolute inset-0 bg-gradient-to-t from-maroon/95 via-maroon/30 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-2.5 text-center">
+                  <h3 className="font-serif text-cream text-[13px] md:text-sm font-semibold leading-tight">{COLLECTIONS[h].title}</h3>
+                  <p className="text-gold text-[9px] mt-1">{COLLECTIONS[h].count} items</p>
+                </div>
               </div>
             </Link>
           ))}
@@ -217,25 +238,25 @@ function App() {
       <section className="bg-white border-y border-gold/30 py-16">
         <div className="container mx-auto px-4 grid md:grid-cols-2 gap-10 items-center">
           <div className="grid grid-cols-2 gap-3">
-            <img src={IMG.brassCollection} alt="Brass idols" className="aspect-square rounded-2xl object-cover shadow-lg" />
-            <img src={IMG.dancers} alt="Handcrafted figurines" className="aspect-square rounded-2xl object-cover shadow-lg mt-8" />
-            <img src={IMG.brassBells} alt="Brass bells" className="aspect-square rounded-2xl object-cover shadow-lg" />
-            <img src={IMG.elephants} alt="Elephant figurines" className="aspect-square rounded-2xl object-cover shadow-lg mt-8" />
+            <img src={img('glam-potlies')} alt="Glam potlies" className="aspect-square rounded-2xl object-cover shadow-lg" />
+            <img src={img('candles')} alt="Decorative diyas and tealight holders" className="aspect-square rounded-2xl object-cover shadow-lg mt-8" />
+            <img src={img('shubh-labh')} alt="Shubh Labh decor" className="aspect-square rounded-2xl object-cover shadow-lg" />
+            <img src={img('tissue-potli')} alt="Dry fruit potlies" className="aspect-square rounded-2xl object-cover shadow-lg mt-8" />
           </div>
           <div>
-            <p className="text-saffron font-semibold uppercase tracking-widest text-sm mb-2">Handmade Antiques</p>
+            <p className="text-saffron font-semibold uppercase tracking-widest text-sm mb-2">Handmade Gifting & Decor</p>
             <h2 className="font-serif text-4xl md:text-5xl text-maroon leading-tight">Where tradition meets craftsmanship</h2>
             <p className="text-maroon/75 mt-4 leading-relaxed">
-              Every brass idol and wooden puja piece is hand-cast by artisan families from Moradabad, Jaipur and Kumbakonam. Real materials, real hands, real heritage — built to be passed down generations.
+              Beyond poshak — hand-embroidered potlies, cash envelopes, tealight holders, torans and Shubh Labh sets. Every piece is finished by artisan families, ready for weddings, festivals and everyday seva.
             </p>
             <div className="grid grid-cols-3 gap-4 mt-6">
               <div><div className="text-2xl font-bold text-maroon font-serif">120+</div><div className="text-xs text-maroon/70">Artisan families</div></div>
               <div><div className="text-2xl font-bold text-maroon font-serif">100%</div><div className="text-xs text-maroon/70">Handcrafted</div></div>
               <div><div className="text-2xl font-bold text-maroon font-serif">Pure</div><div className="text-xs text-maroon/70">Brass & wood</div></div>
             </div>
-            <Link href="/shop?category=antiques" className="inline-block mt-6">
+            <Link href="/collection/glam-potlies" className="inline-block mt-6">
               <Button size="lg" className="bg-maroon hover:bg-maroon/90 text-cream">
-                Explore Antiques <ArrowRight className="ml-2 h-4 w-4" />
+                Explore Gifting & Decor <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
           </div>

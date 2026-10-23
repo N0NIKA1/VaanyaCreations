@@ -1,0 +1,446 @@
+[
+ {
+  "label": "New In & Bestsellers",
+  "href": "/collections/newin-bestsellers",
+  "children": []
+ },
+ {
+  "label": "Devotees Collection",
+  "href": "/collections/devotee-collection",
+  "children": []
+ },
+ {
+  "label": "Luxe Edits",
+  "href": null,
+  "children": [
+   {
+    "label": "Luxe Laddu Gopal Dress",
+    "href": "/collections/luxe-laddu",
+    "children": []
+   },
+   {
+    "label": "Luxe Mata Rani Dress",
+    "href": "/collections/luxe-mata",
+    "children": []
+   },
+   {
+    "label": "Luxe RK Dress",
+    "href": "/collections/luxe-rk",
+    "children": []
+   },
+   {
+    "label": "Luxe Shringar Jewellery Set",
+    "href": "/collections/shringar-set",
+    "children": []
+   },
+   {
+    "label": "Luxe Necklace",
+    "href": "/collections/luxe-necklace",
+    "children": []
+   },
+   {
+    "label": "Luxe Mukut",
+    "href": "/collections/luxe-mukut",
+    "children": []
+   },
+   {
+    "label": "Luxe Kangan",
+    "href": "/collections/luxe-kangan",
+    "children": []
+   },
+   {
+    "label": "Luxe Bansuri",
+    "href": "/collections/luxe-bansuri",
+    "children": []
+   }
+  ]
+ },
+ {
+  "label": "Shop By Deity",
+  "href": null,
+  "children": [
+   {
+    "label": "Laddu Gopal Dresses",
+    "href": "#",
+    "children": [
+     {
+      "label": "Soft Pastel Edit",
+      "href": "/collections/pastel-laddu",
+      "children": []
+     },
+     {
+      "label": "Designer Dresses",
+      "href": "/collections/laddu-gopal-designer",
+      "children": []
+     },
+     {
+      "label": "Luxe Edit",
+      "href": "/collections/luxe-laddu",
+      "children": []
+     },
+     {
+      "label": "Summer Collection",
+      "href": "/collections/summer-laddu-gopal",
+      "children": []
+     },
+     {
+      "label": "Summer Bedding Set",
+      "href": "/collections/bedding-set",
+      "children": []
+     },
+     {
+      "label": "Woollen Dresses",
+      "href": "/collections/woollen-laddu",
+      "children": []
+     },
+     {
+      "label": "Velvet Laddu Gopal Dresses",
+      "href": "/collections/laddu-velvet",
+      "children": []
+     }
+    ]
+   },
+   {
+    "label": "Radha Rani Dresses",
+    "href": "/collections/radha-rani",
+    "children": []
+   },
+   {
+    "label": "Mata Rani Dresses",
+    "href": "#",
+    "children": [
+     {
+      "label": "Summer Collection",
+      "href": "/collections/summer-mata",
+      "children": []
+     },
+     {
+      "label": "Soft Pastel Edit",
+      "href": "/collections/pastel-mata",
+      "children": []
+     },
+     {
+      "label": "Lehenga & Patka",
+      "href": "/collections/lehenga-patka",
+      "children": []
+     },
+     {
+      "label": "Designer Mata Rani Dresses",
+      "href": "/collections/mata-rani",
+      "children": []
+     },
+     {
+      "label": "Luxe Edit",
+      "href": "/collections/luxe-mata",
+      "children": []
+     },
+     {
+      "label": "Velvet Mata Rani Dresses",
+      "href": "/collections/velvet-mata",
+      "children": []
+     },
+     {
+      "label": "Woollen Mata Rani Dresses",
+      "href": "/collections/woollen-mata",
+      "children": []
+     }
+    ]
+   },
+   {
+    "label": "RK Set / Yugal Sarkar / Laxmi ji & Ganesh ji Dresses",
+    "href": "/collections/rk-set-yugal-sarkar-laxmi-ji-ganesh-ji-dresses",
+    "children": [
+     {
+      "label": "Summer Collection",
+      "href": "/collections/summer-rk",
+      "children": []
+     },
+     {
+      "label": "Soft Pastel Edit",
+      "href": "/collections/pastel-rk",
+      "children": []
+     },
+     {
+      "label": "Designer RK / Yugal Sarkar / Laxmi ji & Ganesh ji Dresses",
+      "href": "/collections/rk-set-yugal-sarkar-laxmi-ji-ganesh-ji-dresses",
+      "children": []
+     },
+     {
+      "label": "Luxe Edit",
+      "href": "/collections/luxe-rk",
+      "children": []
+     },
+     {
+      "label": "Velvet Radhe Krishna Dresses",
+      "href": "/collections/velvet-rk",
+      "children": []
+     },
+     {
+      "label": "Woollen Radhe Krishna Dresses",
+      "href": "/collections/woollen-rk",
+      "children": []
+     }
+    ]
+   },
+   {
+    "label": "Dhoti & Patka",
+    "href": "/collections/dhoti-patka",
+    "children": []
+   },
+   {
+    "label": "Mandir Matching Set",
+    "href": "/collections/matching-set",
+    "children": []
+   },
+   {
+    "label": "Shiv Parivar Dress",
+    "href": "/collections/shiv-dress",
+    "children": []
+   },
+   {
+    "label": "Hanuman Ji Dresses",
+    "href": "/collections/hanuman-dress",
+    "children": []
+   },
+   {
+    "label": "Sai Baba Dresses",
+    "href": "/collections/sai-baba",
+    "children": []
+   }
+  ]
+ },
+ {
+  "label": "Jewellery & Accessories",
+  "href": null,
+  "children": [
+   {
+    "label": "Under \u20b9299",
+    "href": "/collections/under-299",
+    "children": []
+   },
+   {
+    "label": "Puja Items",
+    "href": "/collections/chandan",
+    "children": []
+   },
+   {
+    "label": "Necklace / Haar",
+    "href": "/collections/necklace",
+    "children": [
+     {
+      "label": "Daily Wear Necklace",
+      "href": "/collections/necklace",
+      "children": []
+     },
+     {
+      "label": "Luxe Necklace",
+      "href": "/collections/luxe-necklace",
+      "children": []
+     }
+    ]
+   },
+   {
+    "label": "Kangan",
+    "href": "/collections/kangana",
+    "children": [
+     {
+      "label": "Designer Kangan",
+      "href": "/collections/kangana",
+      "children": []
+     },
+     {
+      "label": "Luxe Kangan",
+      "href": "/collections/luxe-kangan",
+      "children": []
+     }
+    ]
+   },
+   {
+    "label": "Bansuri",
+    "href": "/collections/bansuri",
+    "children": [
+     {
+      "label": "Designer Bansuri",
+      "href": "/collections/bansuri",
+      "children": []
+     },
+     {
+      "label": "Luxe Bansuri",
+      "href": "/collections/luxe-bansuri",
+      "children": []
+     }
+    ]
+   },
+   {
+    "label": "Mukut",
+    "href": "/collections/mukut",
+    "children": [
+     {
+      "label": "Daily Wear Mukut",
+      "href": "/collections/mukut",
+      "children": []
+     },
+     {
+      "label": "Luxe Mukut",
+      "href": "/collections/luxe-mukut",
+      "children": []
+     }
+    ]
+   },
+   {
+    "label": "Earrings",
+    "href": "/collections/earrings",
+    "children": []
+   },
+   {
+    "label": "Maang tika",
+    "href": "/collections/maang-tika",
+    "children": []
+   },
+   {
+    "label": "Chandrika",
+    "href": "/collections/chandrika",
+    "children": []
+   },
+   {
+    "label": "Kamar Band",
+    "href": "/collections/kamar-band",
+    "children": []
+   },
+   {
+    "label": "Trishul",
+    "href": "/collections/trishul",
+    "children": []
+   },
+   {
+    "label": "Payal",
+    "href": "/collections/payal",
+    "children": []
+   },
+   {
+    "label": "Bag",
+    "href": "/collections/bag",
+    "children": []
+   },
+   {
+    "label": "Hairs",
+    "href": "/collections/hairs",
+    "children": []
+   },
+   {
+    "label": "Chattar",
+    "href": "/collections/chattar",
+    "children": []
+   },
+   {
+    "label": "Attar / Ittar",
+    "href": "/collections/attar",
+    "children": []
+   },
+   {
+    "label": "Umbrella",
+    "href": "/collections/laddu-gopal-chatri",
+    "children": []
+   },
+   {
+    "label": "Toys",
+    "href": "/collections/toys",
+    "children": []
+   },
+   {
+    "label": "All Jewellery Collection",
+    "href": "/",
+    "children": [
+     {
+      "label": "Luxe Jewellery Collection",
+      "href": "/collections/luxe-jewellery-collection-copy",
+      "children": []
+     },
+     {
+      "label": "Designer jewellery Collection",
+      "href": "/collections/designer-jewellery-collection-copy",
+      "children": []
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "label": "Under \u20b9299",
+  "href": "/collections/under-299",
+  "children": []
+ },
+ {
+  "label": "Clearance Sale",
+  "href": "/collections/clearance-sale",
+  "children": []
+ },
+ {
+  "label": "All Things Wedding",
+  "href": null,
+  "children": [
+   {
+    "label": "Cash Envelopes",
+    "href": "/collections/envelope",
+    "children": []
+   },
+   {
+    "label": "Dry Fruit Potlies",
+    "href": "/collections/tissue-potli",
+    "children": []
+   },
+   {
+    "label": "Glam Potlies",
+    "href": "/collections/glam-potlies",
+    "children": []
+   },
+   {
+    "label": "Trendy Gift Bags",
+    "href": "/collections/trendy-gift-bags",
+    "children": []
+   },
+   {
+    "label": "Clutches & Zippers",
+    "href": "/collections/zip-pouches",
+    "children": []
+   }
+  ]
+ },
+ {
+  "label": "Festive Home Decor",
+  "href": null,
+  "children": [
+   {
+    "label": "Decorative Diyas & Tealight Candle Holder",
+    "href": "/collections/candles",
+    "children": []
+   },
+   {
+    "label": "Shubh Labh",
+    "href": "/collections/shubh-labh",
+    "children": []
+   },
+   {
+    "label": "Torans / Bandhanwal",
+    "href": "/collections/toran-bandhanwal",
+    "children": []
+   },
+   {
+    "label": "Decorative Rangoli",
+    "href": "/collections/rangoli",
+    "children": []
+   }
+  ]
+ },
+ {
+  "label": "Support",
+  "href": null,
+  "children": [
+   {
+    "label": "Return & Exchange",
+    "href": "https://thefestiveshades.myshopify.com/apps/return_prime",
+    "children": []
+   }
+  ]
+ }
+]

@@ -5,7 +5,7 @@ export default function Footer() {
   return (
     <footer className="bg-maroon text-cream mt-20">
       {/* Trust badges */}
-      <div className="border-b border-[#C89B3C]/30">
+      <div className="border-b border-[#E8A9B8]/30">
         <div className="container mx-auto px-4 py-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             {[
@@ -26,14 +26,11 @@ export default function Footer() {
       <div className="container mx-auto px-4 py-14">
         <div className="grid md:grid-cols-4 gap-10">
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-11 h-11 rounded-full gold-gradient flex items-center justify-center">
-                <span className="font-serif text-white text-2xl font-bold">V</span>
+            <div className="mb-4">
+              <div className="inline-block bg-cream rounded-2xl px-4 py-3 shadow-sm">
+                <img src="/brand/logo-full.png" alt="Vaanya Creations 5" className="h-20 w-auto" />
               </div>
-              <div>
-                <div className="font-serif text-2xl font-bold text-gold">Vaanya</div>
-                <div className="text-[10px] uppercase tracking-[0.25em] text-cream/80">Creation 5</div>
-              </div>
+              <div className="text-[10px] uppercase tracking-[0.3em] text-gold mt-3">Poshak • Vastra • Shringar</div>
             </div>
             <p className="text-sm text-cream/80 leading-relaxed">
               Handcrafted deity dresses, brass idols, and antique puja items — lovingly made by Indian artisans, delivered to devotees worldwide.
@@ -51,8 +48,8 @@ export default function Footer() {
               <li><Link href="/deity/laddu-gopal" className="hover:text-saffron">Laddu Gopal Poshak</Link></li>
               <li><Link href="/deity/radha-krishna" className="hover:text-saffron">Radha Krishna Vastra</Link></li>
               <li><Link href="/deity/mata-rani" className="hover:text-saffron">Mata Rani Shringar</Link></li>
-              <li><Link href="/shop?category=antiques" className="hover:text-saffron">Brass Antiques</Link></li>
-              <li><Link href="/shop?category=puja-items" className="hover:text-saffron">Puja Items</Link></li>
+              <li><Link href="/collection/shringar-set" className="hover:text-saffron">Shringar Sets</Link></li>
+              <li><Link href="/collection/glam-potlies" className="hover:text-saffron">Wedding & Gifting</Link></li>
               <li><Link href="/shop" className="hover:text-saffron">All Products</Link></li>
             </ul>
           </div>
@@ -80,7 +77,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-[#C89B3C]/30">
+      <div className="border-t border-[#E8A9B8]/30">
         <div className="container mx-auto px-4 py-5 text-center text-xs text-cream/60">
           © {new Date().getFullYear()} Vaanya Creation 5. All rights reserved. Made with devotion in Bharat 🛡️
         </div>
